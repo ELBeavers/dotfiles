@@ -1,3 +1,1 @@
-if [ -f ~/.bashrc ]; then
-   source ~/.bashrc
-fi
+/Users/ELBeavers/.bash_profile
