@@ -15,5 +15,5 @@ A couple of other great sites for beginning .dot file customization are:
 
 - [Getting Started with BASH, A Bash Tutorial](http://www.hypexr.org/bash_tutorial.php#cmd_prompt)
 - [Tip: Prompt Magic, Enhancing the system prompt](http://www.ibm.com/developerworks/linux/library/l-tip-prompt/)
-
+- [9 Enhancements to Shell and Vim Productivity](http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity)
 Have fun!
