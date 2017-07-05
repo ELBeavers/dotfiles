@@ -1,11 +1,13 @@
-<pre>      _________  __   __
+```
+      _________  __   __
      |   ______||__| |  |
      |  |        __  |  |    ___      ______
      |  |___    |  | |  |  /  __ \   /  ___/
      |   ___|   |  | |  | |  /__\ | |  /___
      |  |       |  | |  | |  _____|  \____  \
  __  |  |       |  | |  | |  |____   ____/  /
-|__| |__|       |__| |__|  \_____/  /______/</pre>
+|__| |__|       |__| |__|  \_____/  /______/
+```
 
 Nothing much to see here for now. Just a few light .dot files that I use to customize some of my working environments. I look forward to learning more. This repository will be an indicator of how much nerdery I am dabbling in; a geek barometer if you will.
 
