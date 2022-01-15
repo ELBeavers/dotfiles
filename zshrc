@@ -175,4 +175,4 @@ man() {
 }
 
 # Run this command at startup
-archey; fortune | cowsay
+archey; macchina | cowsay
