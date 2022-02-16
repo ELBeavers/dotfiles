@@ -127,7 +127,7 @@ man() {
 }
 
 # Run this command at startup
-archey; macchina | cowsay
+macchina; fortune | cowsay
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
