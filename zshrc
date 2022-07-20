@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 #! /bin/zsh
 
 # If you come from bash you might have to change your $PATH.
@@ -10,7 +17,8 @@ export ZSH="/Users/elb/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="bira"
+# Eric Likes "bira"
+ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -54,7 +62,7 @@ COMPLETION_WAITING_DOTS="true"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -65,7 +73,12 @@ HIST_STAMPS="mm/dd/yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git brew extract
+  docker-compose
+  git
+  extract
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  zsh-autoquoter
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -109,7 +122,7 @@ fi
 # 		        \/     \/        \/       
 ################################################################
         
-# Source aliases
+# Source custom aliases file
 ALIASFILE=~/.shrc
 source $ALIASFILE
 
@@ -126,13 +139,25 @@ man() {
             man "$@"
 }
 
-# Run this command at startup
-macchina; fortune | cowsay
-
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# for making rbenv work (2019-01-15 elb)
+# 2019-01-15 Added to make rbenv work
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$(brew --prefix openssl@1.1)"
 eval "$(rbenv init -)"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+source ~/Documents/code/github-elbeavers/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Run this command at startup
+# fortune | cowsay
+
+export PATH="/usr/local/sbin:$PATH"
+
+# 2022-05-10 Added to complement zsh-autoquoter plugin
+ZSH_HIGHLIGHT_HIGHLIGHTERS+=(zaq)
+
+setopt share_history
