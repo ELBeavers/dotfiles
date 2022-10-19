@@ -135,33 +135,33 @@ source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 ALIASFILE=~/.shrc
 source $ALIASFILE
 
-# colored man pages courtesy of 
-# http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
-man() {
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-            man "$@"
-}
-
-# applied the same principle as above and it also works for `info` pages
-# ---Eric on 2022-09-18 
-info() {
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-            man "$@"
-}
+	# colored man pages courtesy of 
+	# http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
+	man() {
+			env \
+					LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+					LESS_TERMCAP_md=$(printf "\e[1;31m") \
+					LESS_TERMCAP_me=$(printf "\e[0m") \
+					LESS_TERMCAP_se=$(printf "\e[0m") \
+					LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+					LESS_TERMCAP_ue=$(printf "\e[0m") \
+					LESS_TERMCAP_us=$(printf "\e[1;32m") \
+							man "$@"
+	}
+	
+	# applied the same principle as above and it also works for `info` pages
+	# ---Eric on 2022-09-18 
+	info() {
+			env \
+					LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+					LESS_TERMCAP_md=$(printf "\e[1;31m") \
+					LESS_TERMCAP_me=$(printf "\e[0m") \
+					LESS_TERMCAP_se=$(printf "\e[0m") \
+					LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+					LESS_TERMCAP_ue=$(printf "\e[0m") \
+					LESS_TERMCAP_us=$(printf "\e[1;32m") \
+							man "$@"
+	}
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
