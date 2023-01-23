@@ -85,6 +85,7 @@ plugins=(
 	extract
 	zsh-autosuggestions
 	z
+	macos
 )
 
 source $ZSH/oh-my-zsh.sh
