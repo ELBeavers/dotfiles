@@ -34,8 +34,8 @@ ZSH_THEME="robbyrussell"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
 zstyle ':omz:update' frequency 13
@@ -125,10 +125,7 @@ source $ZSH/oh-my-zsh.sh
 # 		        \/     \/        \/       
 ################################################################
 
-
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -165,7 +162,58 @@ source $ALIASFILE
 							man "$@"
 	}
 
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Add some useful directories to my $PATH
-export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:~/Library/Python/3.10/bin:~/.rbenv/shims:/usr/local/bin:/usr/bin:/bin$PATH"
+# git repository greeter
+last_repository=
+check_directory_for_new_repository() {
+	current_repository=$(git rev-parse --show-toplevel 2> /dev/null)
+	
+	if [ "$current_repository" ] && \
+	   [ "$current_repository" != "$last_repository" ]; then
+		onefetch
+	fi
+	last_repository=$current_repository
+}
+cd() {
+	builtin cd "$@"
+	check_directory_for_new_repository
+}
+
+# # Herd injected NVM configuration
+# export NVM_DIR="/Users/ericbeavers/Library/Application Support/Herd/config/nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# 
+# [[ -f "/Applications/Herd.app/Contents/Resources/config/shell/zshrc.zsh" ]] && builtin source "/Applications/Herd.app/Contents/Resources/config/shell/zshrc.zsh"
+# 
+# # Herd injected PHP 8.3 configuration.
+# export HERD_PHP_83_INI_SCAN_DIR="/Users/ericbeavers/Library/Application Support/Herd/config/php/83/"
+# 
+# 
+# # Herd injected PHP binary.
+# export PATH="/Users/ericbeavers/Library/Application Support/Herd/bin/":$PATH
+# 
+# 
+# # Herd injected PHP 8.2 configuration.
+# export HERD_PHP_82_INI_SCAN_DIR="/Users/ericbeavers/Library/Application Support/Herd/config/php/82/"
+# 
+# 
+# # Herd injected PHP 8.1 configuration.
+# export HERD_PHP_81_INI_SCAN_DIR="/Users/ericbeavers/Library/Application Support/Herd/config/php/81/"
+
+
+# export PATH="/opt/homebrew/opt/php@8.1/bin:$PATH"
+# export PATH="/opt/homebrew/opt/php@8.1/sbin:$PATH"
+# export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+# 
+# export PATH="/opt/homebrew/opt/php@8.2/bin:$PATH"
+# export PATH="/opt/homebrew/opt/php@8.2/sbin:$PATH"
+# export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+
+export PATH="/opt/homebrew/opt/php@8.3/bin:$PATH"
+export PATH="/opt/homebrew/opt/php@8.3/sbin:$PATH"
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:~/Library/Python/3.10/bin:~/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/Applications/PhpStorm.app/Contents/MacOS:/System/Cryptexes/App/usr/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin:/bin/usr/bin:/Applications/iTerm.app/Contents/Resources/utilities:/Users/ericbeavers/Library/Application\ Support/JetBrains/Toolbox/scripts"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
