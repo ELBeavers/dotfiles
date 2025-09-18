@@ -80,12 +80,19 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+	bbedit
+	colored-man-pages
 	docker-compose
-	git
 	extract
-	zsh-autosuggestions
-	z
+	fzf
+	git
 	macos
+	marked2
+	wp-cli
+	z
+	zsh-autosuggestions
+	zsh-history-substring-search
+	zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -131,25 +138,11 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Source custom aliases file
-ALIASFILE=~/.shrc
-source $ALIASFILE
-
-	# colored man pages courtesy of 
-	# http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
-	man() {
-			env \
-					LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-					LESS_TERMCAP_md=$(printf "\e[1;31m") \
-					LESS_TERMCAP_me=$(printf "\e[0m") \
-					LESS_TERMCAP_se=$(printf "\e[0m") \
-					LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-					LESS_TERMCAP_ue=$(printf "\e[0m") \
-					LESS_TERMCAP_us=$(printf "\e[1;32m") \
-							man "$@"
-	}
+	ALIASFILE=~/.shrc
+	source $ALIASFILE
 	
-	# applied the same principle as above and it also works for `info` pages
-	# ---Eric on 2022-09-18 
+# applied the same principle as above and it also works for `info` pages
+# ---Eric on 2022-09-18 
 	info() {
 			env \
 					LESS_TERMCAP_mb=$(printf "\e[1;31m") \
@@ -161,55 +154,42 @@ source $ALIASFILE
 					LESS_TERMCAP_us=$(printf "\e[1;32m") \
 							man "$@"
 	}
+	
+# Intelligent extraction of compressed archives
+# Usage: `extract filename.foo`
+	extract() {
+  case $1 in
+    *.tar.gz|*.tgz) tar -xzf "$1";;
+    *.tar.bz2|*.tbz2) tar -xjf "$1";;
+    *.zip) unzip "$1";;
+    *.rar) unrar x "$1";;
+    *) echo "Unknown archive format";;
+  esac
+	}
+
+# Find and kill processes by name
+	pskill() {
+  	ps aux | grep "$1" | grep -v grep | awk '{print $2}' | xargs kill
+	}
 
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # git repository greeter
-last_repository=
-check_directory_for_new_repository() {
-	current_repository=$(git rev-parse --show-toplevel 2> /dev/null)
-	
-	if [ "$current_repository" ] && \
-	   [ "$current_repository" != "$last_repository" ]; then
-		onefetch
-	fi
-	last_repository=$current_repository
-}
-cd() {
-	builtin cd "$@"
-	check_directory_for_new_repository
-}
-
-# # Herd injected NVM configuration
-# export NVM_DIR="/Users/ericbeavers/Library/Application Support/Herd/config/nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# 
-# [[ -f "/Applications/Herd.app/Contents/Resources/config/shell/zshrc.zsh" ]] && builtin source "/Applications/Herd.app/Contents/Resources/config/shell/zshrc.zsh"
-# 
-# # Herd injected PHP 8.3 configuration.
-# export HERD_PHP_83_INI_SCAN_DIR="/Users/ericbeavers/Library/Application Support/Herd/config/php/83/"
-# 
-# 
-# # Herd injected PHP binary.
-# export PATH="/Users/ericbeavers/Library/Application Support/Herd/bin/":$PATH
-# 
-# 
-# # Herd injected PHP 8.2 configuration.
-# export HERD_PHP_82_INI_SCAN_DIR="/Users/ericbeavers/Library/Application Support/Herd/config/php/82/"
-# 
-# 
-# # Herd injected PHP 8.1 configuration.
-# export HERD_PHP_81_INI_SCAN_DIR="/Users/ericbeavers/Library/Application Support/Herd/config/php/81/"
-
-
-# export PATH="/opt/homebrew/opt/php@8.1/bin:$PATH"
-# export PATH="/opt/homebrew/opt/php@8.1/sbin:$PATH"
-# export PATH="/opt/homebrew/opt/curl/bin:$PATH"
-# 
-# export PATH="/opt/homebrew/opt/php@8.2/bin:$PATH"
-# export PATH="/opt/homebrew/opt/php@8.2/sbin:$PATH"
-# export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+	last_repository=
+	check_directory_for_new_repository() {
+		current_repository=$(git rev-parse --show-toplevel 2> /dev/null)
+		
+		if [ "$current_repository" ] && \
+			 [ "$current_repository" != "$last_repository" ]; then
+			onefetch
+		fi
+		last_repository=$current_repository
+	}
+	cd() {
+		builtin cd "$@"
+		check_directory_for_new_repository
+	}
 
 export PATH="/opt/homebrew/opt/php@8.3/bin:$PATH"
 export PATH="/opt/homebrew/opt/php@8.3/sbin:$PATH"
@@ -217,3 +197,4 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:~/Library/Python/3.10/bin:~/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/Applications/PhpStorm.app/Contents/MacOS:/System/Cryptexes/App/usr/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin:/bin/usr/bin:/Applications/iTerm.app/Contents/Resources/utilities:/Users/ericbeavers/Library/Application\ Support/JetBrains/Toolbox/scripts"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+export PATH="/opt/homebrew/opt/docker/bin:$PATH"
