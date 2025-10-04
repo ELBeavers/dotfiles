@@ -167,6 +167,9 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
   esac
 	}
 
+# Tmux SetPaneName - e.g. spn drupal
+spn() { printf '\033]2;%s\033\\' $1 ; }
+
 # Find and kill processes by name
 	pskill() {
   	ps aux | grep "$1" | grep -v grep | awk '{print $2}' | xargs kill
