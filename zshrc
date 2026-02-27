@@ -133,10 +133,21 @@ source $ZSH/oh-my-zsh.sh
 # 		        \/     \/        \/       
 ################################################################
 
+# iTerm2 shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# History options
+HISTDUP=erase
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
 
 # Source custom aliases file
 	ALIASFILE=~/.shrc
