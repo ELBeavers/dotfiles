@@ -91,6 +91,7 @@ plugins=(
 	wp-cli
 	z
 	zsh-autosuggestions
+	zsh-deja-vu
 	zsh-history-substring-search
 	zsh-syntax-highlighting
 )
@@ -132,10 +133,21 @@ source $ZSH/oh-my-zsh.sh
 # 		        \/     \/        \/       
 ################################################################
 
+# iTerm2 shell integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# History options
+HISTDUP=erase
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
 
 # Source custom aliases file
 	ALIASFILE=~/.shrc
@@ -154,7 +166,12 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 					LESS_TERMCAP_us=$(printf "\e[1;32m") \
 							man "$@"
 	}
-	
+
+# Open buffer line in editor from "10 zsh hacks…" at https://www.youtube.com/watch?v=3fVAtaGhUyU
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^x^e' edit-command-line
+
 # Intelligent extraction of compressed archives
 # Usage: `extract filename.foo`
 	extract() {
@@ -201,3 +218,6 @@ export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:~/Library/Python/3.10/bin:~/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/Applications/PhpStorm.app/Contents/MacOS:/System/Cryptexes/App/usr/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin:/bin/usr/bin:/Applications/iTerm.app/Contents/Resources/utilities:/Users/ericbeavers/Library/Application\ Support/JetBrains/Toolbox/scripts"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/opt/homebrew/opt/docker/bin:$PATH"
+export PATH="/opt/local/bin:$PATH"
+export PATH="$HOME/.composer/vendor/bin:$PATH"
+export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
