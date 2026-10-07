@@ -106,11 +106,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='vim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -138,6 +138,22 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# git repository greeter
+	last_repository=
+	check_directory_for_new_repository() {
+		current_repository=$(git rev-parse --show-toplevel 2> /dev/null)
+
+		if [ "$current_repository" ] && \
+			 [ "$current_repository" != "$last_repository" ]; then
+			onefetch
+		fi
+		last_repository=$current_repository
+	}
+	cd() {
+		builtin cd "$@"
+		check_directory_for_new_repository
+	}
 
 # History options
 HISTDUP=erase
@@ -195,21 +211,6 @@ spn() { printf '\033]2;%s\033\\' $1 ; }
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# git repository greeter
-	last_repository=
-	check_directory_for_new_repository() {
-		current_repository=$(git rev-parse --show-toplevel 2> /dev/null)
-		
-		if [ "$current_repository" ] && \
-			 [ "$current_repository" != "$last_repository" ]; then
-			onefetch
-		fi
-		last_repository=$current_repository
-	}
-	cd() {
-		builtin cd "$@"
-		check_directory_for_new_repository
-	}
 
 export PATH="/opt/homebrew/opt/php@8.3/bin:$PATH"
 export PATH="/opt/homebrew/opt/php@8.3/sbin:$PATH"
@@ -221,3 +222,11 @@ export PATH="/opt/homebrew/opt/docker/bin:$PATH"
 export PATH="/opt/local/bin:$PATH"
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
+export PATH="/usr/local/texlive/2026/tlpkg:$PATH"
+eval "$(zoxide init --cmd cd zsh)"
+
+export PATH="/Users/ericbeavers/.lando/bin:$PATH"; #landopath
+
+
+# Unity CLI
+. "/Users/ericbeavers/.unity/env"
